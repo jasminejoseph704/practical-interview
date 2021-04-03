@@ -1,0 +1,29 @@
+
+public class PalindromeChecker {
+
+	public static void main(String[] args) {
+
+//instantiates a scanner object
+		Scanner scanner = new Scanner(System.in);
+    
+//prompts the user to enter a string
+		System.out.print("Please Enter The Possible Palindrome: ");
+
+//sets the "toBeReversed" string to the user input
+		String toBeReversed = scanner.nextLine();
+
+//creates the empty reversedString which will be set to the reversed output later
+		String reversedString = "";
+
+//loop rversing the characters within the string from user input
+		for (int i = toBeReversed.length() - 1; i >= 0; i--) {
+			reversedString = reversedString + toBeReversed.charAt(i);
+		}
+    //if the output from the loop is the same as the input the system prints out that the string is a palindrome, else it prints that it is not
+		if (reversedString.equals(toBeReversed)) {
+			System.out.println("Your String is a Palindrome");
+		} else {
+			System.out.println("Your String is not a Palindrome");
+		}
+	}
+}
