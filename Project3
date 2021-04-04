@@ -1,0 +1,61 @@
+
+	public static void combinationsOfTen(ArrayList<Integer> inputArray, int goalSum, ArrayList<Integer> temp) {
+
+	       int sum = 0;
+	     	       
+	       //find the sum of a combination
+	       for (int x: temp) {	 
+   	   
+	    	   sum += x;
+
+	       }    
+	      
+	       //if sum of temp combo numbers is equal to the goal sum it is printed as a final combination
+	       if (sum == goalSum)
+	            System.out.println("sum("+Arrays.toString(temp.toArray())+")= "+goalSum);
+	       
+	       //stops if combination sum is greater than goal sum 
+	       if (sum >= goalSum){
+
+	    	
+	    	   return;
+	       }	            
+	       
+	       //add the remaining numbers 
+	       for(int i=0;i<inputArray.size();i++) {	  
+  	   
+	             ArrayList<Integer> remainingNumbers = new ArrayList<Integer>();
+
+	             int n = inputArray.get(i);	
+            
+	             for (int j=i+1; j<inputArray.size();j++) {
+
+	            	 remainingNumbers.add(inputArray.get(j));
+	             }
+	             
+	             ArrayList<Integer> tempList = new ArrayList<Integer>(temp);
+
+	             tempList.add(n);
+
+	           //method is called again
+	             combinationsOfTen(remainingNumbers,goalSum,tempList);
+	       }
+
+	    }
+	    public static void resultCombinations(ArrayList<Integer> inputArray, int goalSum) {
+
+	    	combinationsOfTen(inputArray,goalSum,new ArrayList<Integer>());
+
+	    }
+	    
+
+
+	    public static void main(String args[]) {
+
+	        Integer[] inputArray = {1,2,3,4,10,15,20,35,50,100};
+
+	        int goalSum = 10;
+
+	        resultCombinations(new ArrayList<Integer>(Arrays.asList(inputArray)),goalSum);
+
+	    }
