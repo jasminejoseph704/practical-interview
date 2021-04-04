@@ -15,7 +15,7 @@ public class PalindromeChecker {
 //creates the empty reversedString which will be set to the reversed output later
 		String reversedString = "";
 
-//loop rversing the characters within the string from user input
+//loop reversing the characters within the string from user input
 		for (int i = toBeReversed.length() - 1; i >= 0; i--) {
 			reversedString = reversedString + toBeReversed.charAt(i);
 		}
