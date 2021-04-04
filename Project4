@@ -1,0 +1,33 @@
+
+public class ValidCastling {
+	
+	/**
+     * Checks if it is valid Castling move
+     * 
+     * @param kingSquare
+     *            The square of the king
+     * @param rookSquare
+     *            The square of the rook
+     * @return boolean If this is valid Castling
+     */
+    private boolean isValidCastling(Square kingSquare, Square rookSquare) {
+        // Check if the squares are occupied.
+        if (!(kingSquare.isOccupied() && rookSquare.isOccupied())) {
+            return false;
+        }
+        
+            // The pieces are in correct position for castling.
+
+            if (kingSquare.getCoordinate().equals(new Coordinate(e, col))
+                    && (rookSquare.getCoordinate().equals(
+                            new Coordinate(a, col)) || rookSquare
+                            .getCoordinate().equals(new Coordinate(h, col)))) {
+
+             
+
+                return true;
+            }
+                return false;
+    }
+
+}
