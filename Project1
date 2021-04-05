@@ -1,0 +1,30 @@
+/* DESIGN NOTES
+
+*********Java(where we will create database connectivity and control API requests)*******************
+
+-Progress class that defines attribules/properties connected to
+course progress( courseId, courseName, progressValue, isComplete).
+This class will have the variable declarations with a constructor 
+and getters and setters for these progress attributes
+
+-Create a ProgressDAO interface in the model package that outlines the 
+method operations we want to perform on the database 
+(we would likely want methods to update course progress 
+and get course progress from the database)
+
+- Create a ProgressSQLDAO class that acts as a JDBC that 
+fulfills the update and get methods from the interface.
+This will contain our SQL queries
+
+- Create a ProgressController that will make update and get
+API requests to get and update progress value in the database
+
+-Create a test class that acts as an integration test to ensure
+the ProgressSQLDAO is actually updating and getting from the database.
+******************************************************************************************************
+
+********Database(Where course, user, and progress info in stored and maintained)***********************
+
+USER 
+UserID| INT
+F
