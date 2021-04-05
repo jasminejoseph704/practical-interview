@@ -2,33 +2,156 @@
 
 *********Java(where we will create database connectivity and control API requests)*******************
 
--Progress class that defines attribules/properties connected to
+-UserCourse class that defines attribules/properties connected to
 course progress( courseId, courseName, progressValue, isComplete).
 This class will have the variable declarations with a constructor 
 and getters and setters for these progress attributes
 
--Create a ProgressDAO interface in the model package that outlines the 
+-Create a UserCourseDAO interface in the model package that outlines the 
 method operations we want to perform on the database 
 (we would likely want methods to update course progress 
 and get course progress from the database)
 
-- Create a ProgressSQLDAO class that acts as a JDBC that 
+- Create a UserCourseSQLDAO class that acts as a JDBC that 
 fulfills the update and get methods from the interface.
 This will contain our SQL queries
 
-- Create a ProgressController that will make update and get
+- Create a UserCourseController that will make update and get
 API requests to get and update progress value in the database
 
 -Create a test class that acts as an integration test to ensure
-the ProgressSQLDAO is actually updating and getting from the database.
+the UserCourseSQLDAO is actually updating and getting from the database.
 ******************************************************************************************************
+
+public class UserCourse {
+	private Integer courseId;
+  private String courseName;
+	private Integer userId;
+  private int progressValue;
+	private boolean isCompleted;
+	
+  
+  public Integer getCourseId() {
+		return courseId;
+	}
+ 
+  public String getCourseName() {
+		return courseName;
+	}
+ 
+	public Integer getUserId() {
+		return userId;
+	}
+   
+  public int getProgressValue() {
+		return progressValue;
+	}
+  
+public void setProgressValue(int progressValue) {
+		this.progressValue = progressValue;
+	}
+
+	public boolean isCompleted() {
+		return isCompleted;
+	}
+	public void setCompleted(boolean isCompleted) {
+		this.isCompleted = isCompleted;
+	}
+
+	public UserCourse() {
+		
+	}
+	
+	
+	
+}
+
+
+
+public interface UserCourseDAO {
+
+int updateProgress(Progress progressValue, int courseId);
+
+UserCourse getProgressByCourseId(int courseId);
+
+ }
+
+
+@Component
+public class UserCourseSQLDAO implements UserCourseDAO{
+	private JdbcTemplate jdbcTemplate;
+	
+	public UserCourseSQLDAO(JdbcTemplate jdbcTemplate) {
+		this.jdbcTemplate = jdbcTemplate;
+	}
+
+@Override
+	public int updateProgress(UserCourse progressValue, int courseId) {
+		String query = "UPDATE  course_progress SET progress_value = ?, is_completed = ? " + 
+				" WHERE course_id = ?"
+				;
+		return jdbcTemplate.update(query, goals.getDate(), 
+				course.getCourseName(),course.getProgressValue(), course.isCompleted();
+	}
+  
+  
+  
+	@Override
+	UserCourse getProgressByCourseId(int courseId){
+		UserCourse coarse = null;
+		String query = "SELECT user_courses.*, course.category  FROM user_courses "+
+				"JOIN users ON users.user_id = user_courses.user_id  "+
+				"JOIN course_category ON goal_category.course_category_id = user_courses.course.id " +
+				"WHERE course_id =?";
+		SqlRowSet results = this.jdbcTemplate.queryForRowSet(query, CourseId);
+		if(results.next()) {
+			course = this.mapRowToUserCourse(results);
+		}return course;
+	}
+
+private Goals mapRowToGoals(SqlRowSet rs) {
+		UserCourse course = new UserCOurse();
+		course.setUserId(rs.getInt("user_id"));
+	  course.setProgressValue(rs.getInt("progress"));
+		course.setCompleted(rs.getBoolean("is_completed"));
+
+		return course;	
+		
+	}
+
+
+
+@RestController
+@CrossOrigin()
+public class UserCourseController {
+	private UserCourseDAO dao;
+
+
+	public UserCourseController(UserCourseDAO dao) {
+		this.dao = dao;
+
+	}
+
+	@ResponseStatus(HttpStatus.OK)
+	@RequestMapping(path = "user/course/{userCourseId}", method = RequestMethod.PUT)
+	public void update(@RequestBody Goals goals, @PathVariable int userGoalsId) throws ProfileNotFoundException {
+		this.dao.updateGoals(goals, userGoalsId);
+	}
+	@RequestMapping(path="user/goals/{userGoalsId}", method = RequestMethod.GET)
+	public Goals getGoalByUserGoalsId( @PathVariable int userGoalsId) {
+		 return this.dao.getByUserGoalsId( userGoalsId);
+	}  
+
+
+
+
 
 ********Database(Where course, user, and progress info in stored and maintained)**********************
 
-USER Table             USER_COURSES Table          COURSE_PROGRESS Table
+USERS Table             USER_COURSES Table          COURSE_PROGRESS Table
 user_id| INT           user_id                     course_id
-first_name| varchar    course_id                   progress
-last_name| varchar
+first_name| varchar    course_id                   progress_value
+last_name| varchar     course_name                 is_completed
 
 ******************************************************************************************************
 
