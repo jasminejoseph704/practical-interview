@@ -23,8 +23,27 @@ API requests to get and update progress value in the database
 the ProgressSQLDAO is actually updating and getting from the database.
 ******************************************************************************************************
 
-********Database(Where course, user, and progress info in stored and maintained)***********************
+********Database(Where course, user, and progress info in stored and maintained)**********************
 
-USER 
-UserID| INT
-F
+USER Table             USER_COURSES Table          COURSE_PROGRESS Table
+user_id| INT           user_id                     course_id
+first_name| varchar    course_id                   progress
+last_name| varchar
+
+******************************************************************************************************
+
+********HTML/CSS/VUE.JS/JAVASCRIPT(Creates the front end UI of the course progress feature)************
+
+
+
+
+
+
+
+
+
+
+
+*******************************************************************************************************
+
+*/
