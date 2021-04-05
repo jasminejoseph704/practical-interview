@@ -90,18 +90,15 @@ public class UserCourseSQLDAO implements UserCourseDAO{
 		String query = "UPDATE  course_progress SET progress_value = ?, is_completed = ? " + 
 				" WHERE course_id = ?"
 				;
-		return jdbcTemplate.update(query, goals.getDate(), 
-				course.getCourseName(),course.getProgressValue(), course.isCompleted();
+		return jdbcTemplate.update(query, course.getCourseName(),course.getProgressValue(), course.isCompleted();
 	}
-  
-  
+    
   
 	@Override
 	UserCourse getProgressByCourseId(int courseId){
 		UserCourse coarse = null;
 		String query = "SELECT course_progress.*, course.course_id  FROM user_courses "+
 				"JOIN users ON users.user_id = user_courses.user_id  "+
-				"JOIN course_name ON goal_category.course_category_id = user_courses.course.id " +
 				"WHERE course_id =?";
 		SqlRowSet results = this.jdbcTemplate.queryForRowSet(query, CourseId);
 		if(results.next()) {
@@ -109,7 +106,7 @@ public class UserCourseSQLDAO implements UserCourseDAO{
 		}return course;
 	}
 
-private Goals mapRowToGoals(SqlRowSet rs) {
+private UserCourse mapRowToUserCourses(SqlRowSet rs) {
 		UserCourse course = new UserCOurse();
 		course.setUserId(rs.getInt("user_id"));
 	  course.setProgressValue(rs.getInt("progress"));
@@ -134,7 +131,7 @@ public class UserCourseController {
 
 	@ResponseStatus(HttpStatus.OK)
 	@RequestMapping(path = "user/course/{userCourseId, progressValue}", method = RequestMethod.PUT)
-	public void update(@RequestBody UserCourse course, @PathVariable int userGoalsId) throws ProfileNotFoundException {
+	public void update(@RequestBody UserCourse course, @PathVariable int CourseId) throws ProfileNotFoundException {
 		this.dao.updateUserCourse(progressValue);
 	}
 	@RequestMapping(path="user/courseId/{userCourseId, progressValue}", method = RequestMethod.GET)
