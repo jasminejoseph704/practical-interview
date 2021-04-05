@@ -1,4 +1,4 @@
-/* DESIGN NOTES
+/* DESIGN NOTES 
 
 *********Java(where we will create database connectivity and control API requests)*******************
 
@@ -99,9 +99,9 @@ public class UserCourseSQLDAO implements UserCourseDAO{
 	@Override
 	UserCourse getProgressByCourseId(int courseId){
 		UserCourse coarse = null;
-		String query = "SELECT user_courses.*, course.category  FROM user_courses "+
+		String query = "SELECT course_progress.*, course.course_id  FROM user_courses "+
 				"JOIN users ON users.user_id = user_courses.user_id  "+
-				"JOIN course_category ON goal_category.course_category_id = user_courses.course.id " +
+				"JOIN course_name ON goal_category.course_category_id = user_courses.course.id " +
 				"WHERE course_id =?";
 		SqlRowSet results = this.jdbcTemplate.queryForRowSet(query, CourseId);
 		if(results.next()) {
@@ -133,13 +133,13 @@ public class UserCourseController {
 	}
 
 	@ResponseStatus(HttpStatus.OK)
-	@RequestMapping(path = "user/course/{userCourseId}", method = RequestMethod.PUT)
-	public void update(@RequestBody Goals goals, @PathVariable int userGoalsId) throws ProfileNotFoundException {
-		this.dao.updateGoals(goals, userGoalsId);
+	@RequestMapping(path = "user/course/{userCourseId, progressValue}", method = RequestMethod.PUT)
+	public void update(@RequestBody UserCourse course, @PathVariable int userGoalsId) throws ProfileNotFoundException {
+		this.dao.updateUserCourse(progressValue);
 	}
-	@RequestMapping(path="user/goals/{userGoalsId}", method = RequestMethod.GET)
-	public Goals getGoalByUserGoalsId( @PathVariable int userGoalsId) {
-		 return this.dao.getByUserGoalsId( userGoalsId);
+	@RequestMapping(path="user/courseId/{userCourseId, progressValue}", method = RequestMethod.GET)
+	public UserCourse getProgressByCourseId( @PathVariable int CourseId) {
+		 return this.dao.getProgressByCourseIdd( progressValue);
 	}  
 
 
@@ -157,16 +157,64 @@ last_name| varchar     course_name                 is_completed
 
 ********HTML/CSS/VUE.JS/JAVASCRIPT(Creates the front end UI of the course progress feature)************
 
+Here I am using a vue component for the progress bar.This would  also require a router pageto define paths as well as a service 
+page that would act as a controller for the api requests on the front end
+
+Here is a loose visual representation of my plan for the front end in vue.js
+
+ ├── index.html
+├── main.js
+├── api
+│   └── ... # abstractions for making API requests
+├── components
+│   ├── App.vue
+│   └── ...
+└── store
+    ├── index.js 
 
 
+import Vue from 'vue'
+import ProgressBar from 'vue-simple-progress'
+
+new Vue({
+  components: {
+    ProgressBar
+  }
+})
 
 
+//in markup:
 
+<div id="app">
+  <progress-bar size= "big" val= "progressValue" text = "course name & progressValue"></progress-bar>
+</div>
 
+<html>
+<head>
+  ...
+</head>
+<body>
+  <div id="app">
+    <vue-simple-progress></vue-simple-progress>
+  </div>
 
-
+  <script src="path/to/vue.js"></script>
+  <script src="path/to/vue-simple-progress.js"></script>
+  <script>
+    new Vue({
+      el: '#app'
+    })
+  </script>
+</body>
+</html>
 
 
 *******************************************************************************************************
+
+
+This plan is very rough and I would have like to included more, but I really wanted to try and demonstrate my knowledge and understanding of application design
+and that I understand what needs to be done to have a feature work from front to back. Over time I hope to grow in my skills of execution as a junior developer
+with your team. Thanks again!
+
 
 */
